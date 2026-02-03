@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>It's Me</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        (function () {
+            emailjs.init("zcLDERa-PHXQTB6ha");
+        })();
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffe6eb, #fff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .valentine-card .card {
+            width: 22rem;
+            min-height: 20rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(255, 77, 109, 0.3), 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: scale(1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: linear-gradient(to bottom right, #fff0f5, #ffe6eb);
+        }
+
+        /* Card hover effect */
+        .valentine-card .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.4), 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img-top {
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            object-fit: cover;
+            height: 180px;
+        }
+
+        h4,
+        h5,
+        p {
+            color: #333;
+        }
+
+        .image img {
+            border-radius: 15px;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff6b81, #ff4d6d);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            min-width: 48%;
+            padding: 12px 0;
+            box-shadow: 0 8px 15px rgba(255, 77, 109, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-yes:hover {
+            background: linear-gradient(135deg, #ff4d6d, #ff1a3c);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 20px rgba(255, 77, 109, 0.5);
+        }
+
+        /* NOT SURE Button - Soft pink outline button */
+        .btn-no {
+            background: transparent;
+            color: #ff4d6d;
+            font-weight: 600;
+            border: 2px solid #ff4d6d;
+            border-radius: 12px;
+            min-width: 48%;
+            padding: 12px 0;
+            box-shadow: 0 8px 15px rgba(255, 77, 109, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .btn-no:hover {
+            background: #ffe6eb;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 20px rgba(255, 77, 109, 0.3);
+        }
+
+        /* Heart floating animation */
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translateY(-15px) scale(1.05);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        .heading h4::after {
+            content: " ❤️";
+            display: inline-block;
+            animation: floatHeart 2s infinite ease-in-out;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="valentine-card d-flex justify-content-center align-items-center vh-100">
+        <div class="card" style="width: 20rem; min-height: 18rem;">
+            <div class="image p-1">
+                <img src="../MyValentine/images/image.jpeg" class="card-img-top" alt="Us">
+            </div>
+            <div class="card-body">
+                <div class="heading">
+                    <h4 class="fw-bold">Hey Susriti</h4>
+                </div>
+                <div class="text-body">
+                    <p>I’ve been wanting to ask you something…</p>
+                    <h5 class="fw-bold">
+                        Will you be my Valentine?
+                    </h5>
+                </div>
+                <!-- Buttons -->
+                <div class="d-flex flex-row-reverse justify-content-between mt-3">
+                    <button class="btn btn-yes btn-lg" onclick="answer('YES')">YES ☺️</button>
+                    <button class="btn btn-no btn-lg" onclick="answer('no')">NOT SURE </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio -->
+    <audio id="bgMusic" autoplay loop>
+        <source src="../MyValentine/music/love.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const music = document.getElementById("bgMusic");
+        music.volume = 0.2; // soft & romantic
+
+        // play music on first user interaction (bypass autoplay block)
+        document.addEventListener("click", () => {
+            music.play().catch(e => console.log("Music play blocked until interaction"));
+        }, { once: true });
+    </script>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <script>
+        const card = document.querySelector('.valentine-card');
+
+        function answer(response) {
+
+            emailjs.send("service_u9di0t5", "template_3mpt0qp", {
+                answer: response,
+                time: new Date().toLocaleString()
+            });
+
+            if (response === "YES") {
+                card.innerHTML = `
+                <div class="d-flex flex-column justify-content-center align-items-center vh-100 text-center">
+                    <h1 class="fw-bold text-danger">💖 She Said YES 💖</h1>
+                    <p class="fs-4 mt-3">
+                        You just made my heart smile.<br>
+                        Happy Valentine’s 💕
+                    </p>
+                </div>
+            `;
+            } else {
+                alert("Noted 💭 Take your time.");
+            }
+        }
+    </script>
+
+
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
